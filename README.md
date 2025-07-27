@@ -9,6 +9,9 @@
   - Lib muito útil para usar junto ao shadcn ui para toasts
   - Fácil de configurar
   - Docs: https://sonner.emilkowal.ski/getting-started
+
+  ### Zod
+  - Lib para validação 
     
 ## Comandos utéis para desenvolvimento
 
