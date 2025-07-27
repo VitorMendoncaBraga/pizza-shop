@@ -1,13 +1,10 @@
-import { Button } from "./components/ui/button"
+import { Toaster } from "sonner";
+import { RoutesLayout } from "./RoutesLayout";
 export function App() {
-  
-
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <Button>
-          Enviar
-      </Button>
-    </div>
-  )
+    <>
+      <Toaster richColors/>
+      <RoutesLayout />;
+    </>
+  );
 }
-
