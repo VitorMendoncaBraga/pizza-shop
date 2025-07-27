@@ -34,7 +34,7 @@
 - pnpm i -D eslint-plugin-simple-import-sort
 - arquivo .eslintrc
   
-  ```
+```
   {
     "plugins": ["simple-import-sort"]
     "rules": {
@@ -42,7 +42,7 @@
     }
   }
   
-  ```
+```
 
 
 
