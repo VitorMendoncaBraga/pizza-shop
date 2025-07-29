@@ -2,7 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
+
 import { z } from "zod";
 export function SignIn() {
   const { register, handleSubmit, formState } = useForm<SignInForm>();
@@ -35,6 +37,9 @@ export function SignIn() {
 
   return (
     <div className="flex min-h-screen items-center justify-center p-8">
+      <Button asChild className="absolute top-8 right-8" variant={"ghost"}>
+        <Link to="/sign-up">Novo estabelecimento</Link>
+      </Button>
       <title>Login</title>
       <div className="flex w-[350px] flex-col justify-center gap-6">
         <div className="flex flex-col gap-2 text-center">
