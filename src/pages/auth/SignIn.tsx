@@ -1,13 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams} from "react-router-dom";
 import { toast } from "sonner";
-
+import { signIn } from "@/api/sign-in";
 import { z } from "zod";
+
 export function SignIn() {
-  const { register, handleSubmit, formState } = useForm<SignInForm>();
+  const [searchParams] = useSearchParams();
+  const { register, handleSubmit, formState } = useForm<SignInForm>({
+
+    defaultValues: {
+      email: searchParams.get("email") ?? ""
+    }
+    
+  });
 
   const signInFormSchema = z.object({
     email: z.string().email("Email inválido"),
@@ -15,17 +24,21 @@ export function SignIn() {
 
   type SignInForm = z.infer<typeof signInFormSchema>;
 
+  const { mutateAsync: authenticate } = useMutation({
+    mutationFn: signIn,
+  });
+
   async function handleSignIn(data: SignInForm) {
     try {
       console.log(data);
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await authenticate({ email: data.email });
       toast.success("Enviamos um link de autenticação para seu e-mail!", {
-        action:{
+        action: {
           label: "Reenviar link",
           onClick: () => {
             handleSignIn(data); // Reenvia o link de autenticação
           },
-        }
+        },
       }); // Simula uma requisição
     } catch (error) {
       console.error("Erro ao enviar o link de autenticação:", error);
