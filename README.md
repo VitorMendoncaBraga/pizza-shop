@@ -14,10 +14,10 @@
   - Lib para validação 
 
   ```
-  ` import z from 'zod'
-  `
-  ` const formSchema = z.object({
-  `   name: z.string().min(1),
+   import z from 'zod'
+  
+   const formSchema = z.object({
+     name: z.string().min(1),
       description: z.string()
     })
 
@@ -32,50 +32,51 @@
   - Configurações possíveis
 
     ```
-  ` import { useForm } from 'react-hook-form'
-  `
-  ` const {register, handleSubmit} = useForm({
-      // posso colocar valores padrões
-      defaultValues: {
-        // atributos do objeto 
-      }
-      // posso colocar valores para que o objeto fique de olho e atualize!
-      values: {
-          name: managedRestaurant?.name ?? "",
-          description: managedRestaurant?.description ?? "",
-      }
-     })
-  ` 
-  ```
+    import { useForm } from 'react-hook-form'
+
+    const {register, handleSubmit} = useForm({
+        // posso colocar valores padrões
+        defaultValues: {
+          // atributos do objeto 
+        }
+        // posso colocar valores para que o objeto fique de olho e atualize!
+        values: {
+            name: managedRestaurant?.name ?? "",
+            description: managedRestaurant?.description ?? "",
+        }
+      })
+   
+    ```
 
 
   - Exemplo de uso
   ```
-  ` import { useForm } from 'react-hook-form'
-  `
-  ` const {register, handleSubmit} = useForm()
-  ` 
-  ` async function handleForm(data: any){
-      try{
-        await axios.post("/auth", data)
-        toast.success("Usuário autenticado com sucesso!")
+   import { useForm } from 'react-hook-form'
+  
+    const {register, handleSubmit} = useForm()
+    
+    async function handleForm(data: any){
+        try{
+          await axios.post("/auth", data)
+          toast.success("Usuário autenticado com sucesso!")
+        }
+        catch{
+          toast.error("Erro ao autenticar o usuário!")
+        }
       }
-      catch{
-        toast.error("Erro ao autenticar o usuário!")
+    
+      function MeuComponente() {
+      return (
+        <form onSubmit={handleSubmit(handleForm)}>
+            <label>Nome</label>
+            <input {...register("name")}/>
+            <label>E-mail</label>
+            <input {...register("email")} />
+            <button type="submit">
+        </form>
+      )
       }
-    }
-  ` 
-  `  function MeuComponente() {
-  `  return (
-  `    <form onSubmit={handleSubmit(handleForm)}>
-          <label>Nome</label>
-          <input {...register("name")}/>
-          <label>E-mail</label>
-          <input {...register("email")} />
-          <button type="submit">
-       </form>
-  `  )
-  `  }
+
   ```
 
   ### React Query
@@ -83,17 +84,17 @@
 
   - Configuração
   ```
-  ` import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-  `
-  ` const queryClient = new QueryClient()
-  `
-  `  function App() {
-  `  return (
-  `    <QueryClientProvider client={queryClient}>
-  `      {/* seu app aqui */}
-  `    </QueryClientProvider>
-  `  )
-  `  }
+   import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+  
+   const queryClient = new QueryClient()
+  
+    function App() {
+    return (
+      <QueryClientProvider client={queryClient}>
+        {/* seu app aqui */}
+      </QueryClientProvider>
+    )
+    }
   ```
 
   #### useQuery
@@ -103,26 +104,26 @@
    - Também recebe como parâmetro o queryFn para ser a função da requisição
 
   ```
-  ` import { useQuery } from '@tanstack/react-query'
-  `  import axios from 'axios'
-  `
-  `  function Exemplo() {
-  `    const { data, isLoading, error } = useQuery({
-  `      queryKey: ['usuarios'],
-  `      queryFn: () => axios.get('/api/usuarios').then(res => res.data),
-  `    })
-  `
-  `    if (isLoading) return <p>Carregando...</p>
-  `    if (error) return <p>Erro ao carregar os dados</p>
-  `
-  `    return (
-  `      <ul>
-  `        {data.map(usuario => (
-  `          <li key={usuario.id}>{usuario.nome}</li>
-  `        ))}
-  `      </ul>
-  `    )
-  `  }
+   import { useQuery } from '@tanstack/react-query'
+    import axios from 'axios'
+  
+    function Exemplo() {
+      const { data, isLoading, error } = useQuery({
+       queryKey: ['usuarios'],
+        queryFn: () => axios.get('/api/usuarios').then(res => res.data),
+      })
+  
+      if (isLoading) return <p>Carregando...</p>
+      if (error) return <p>Erro ao carregar os dados</p>
+  
+     return (
+       <ul>
+          {data.map(usuario => (
+          <li key={usuario.id}>{usuario.nome}</li>
+         ))}
+        </ul>
+     )
+   }
 
   ```
 
