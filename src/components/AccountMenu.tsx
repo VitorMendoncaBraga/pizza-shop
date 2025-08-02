@@ -6,12 +6,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "./ui/dropdown-menu";
+import { Dialog, DialogTrigger } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Building, ChevronDown, LogOut } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { getProfile } from "@/api/getProfile";
 import { getManagedRestaurant } from "@/api/getManagedRestaurant";
 import { Skeleton } from "./ui/skeleton";
+import { RestaurantProfile } from "./RestaurantProfile";
+import { useState } from "react";
 
 export function AccountMenu() {
   // UseQuery recebe uma queryKey para poder reconhecer a requisição em cache, e recebe um queryFunction, que foi criada na pasta /api
@@ -27,46 +30,51 @@ export function AccountMenu() {
     });
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant={"outline"}
-          className="flex items-center gap-2 select-none"
-        >
-          {isLoadingManagedRestaurant ? (
-            <Skeleton className="h-4 w-40" />
-          ) : (
-            managedRestaurant?.name
-          )}
-          <ChevronDown />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel className="flex flex-col">
-          {isLoadingProfile ? (
-           <>
-             <Skeleton className="h-4 w-32" />
-            <Skeleton className="h-3 w-32" />
-           </>
-          ) : (
-            <>
-              <span>{profile?.name}</span>
-              <span className="font-sm text-muted-foreground text-xs">
-                {profile?.email}
-              </span>
-            </>
-          )}
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator></DropdownMenuSeparator>
-        <DropdownMenuItem>
-          <Building className="h-4 w-4" />
-          <span>Perfil da loja</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <LogOut className="h-4 w-4 text-rose-400 dark:text-rose-500" />
-          <span>Sair</span>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Dialog>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant={"outline"}
+            className="flex items-center gap-2 select-none"
+          >
+            {isLoadingManagedRestaurant ? (
+              <Skeleton className="h-4 w-40" />
+            ) : (
+              managedRestaurant?.name
+            )}
+            <ChevronDown />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-56">
+          <DropdownMenuLabel className="flex flex-col">
+            {isLoadingProfile ? (
+              <>
+                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-3 w-32" />
+              </>
+            ) : (
+              <>
+                <span>{profile?.name}</span>
+                <span className="font-sm text-muted-foreground text-xs">
+                  {profile?.email}
+                </span>
+              </>
+            )}
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DialogTrigger asChild>
+            <DropdownMenuItem className="flex cursor-pointer items-center gap-2">
+              <Building />
+              <span>Perfil da loja</span>
+            </DropdownMenuItem>
+          </DialogTrigger>
+          <DropdownMenuItem>
+            <LogOut className="h-4 w-4 text-rose-400 dark:text-rose-500" />
+            <span>Sair</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+       <RestaurantProfile />
+    </Dialog>
   );
 }

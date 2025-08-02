@@ -13,8 +13,70 @@
   ### Zod
   - Lib para validação 
 
+  ```
+  ` import z from 'zod'
+  `
+  ` const formSchema = z.object({
+  `   name: z.string().min(1),
+      description: z.string()
+    })
+
+    type FormSchema = z.infer<typeof formSchema>
+  ```
+
+  - Utiliza esse tipo FormSchema para poder tipar os dados do formulario
+
   ### React Hook Form
   - Lib para formulários
+
+  - Configurações possíveis
+
+    ```
+  ` import { useForm } from 'react-hook-form'
+  `
+  ` const {register, handleSubmit} = useForm({
+      // posso colocar valores padrões
+      defaultValues: {
+        // atributos do objeto 
+      }
+      // posso colocar valores para que o objeto fique de olho e atualize!
+      values: {
+          name: managedRestaurant?.name ?? "",
+          description: managedRestaurant?.description ?? "",
+      }
+     })
+  ` 
+  ```
+
+
+  - Exemplo de uso
+  ```
+  ` import { useForm } from 'react-hook-form'
+  `
+  ` const {register, handleSubmit} = useForm()
+  ` 
+  ` async function handleForm(data: any){
+      try{
+        await axios.post("/auth", data)
+        toast.success("Usuário autenticado com sucesso!")
+      }
+      catch{
+        toast.error("Erro ao autenticar o usuário!")
+      }
+    }
+  ` 
+  `  function MeuComponente() {
+  `  return (
+  `    <form onSubmit={handleSubmit(handleForm)}>
+          <label>Nome</label>
+          <input {...register("name")}/>
+          <label>E-mail</label>
+          <input {...register("email")} />
+          <button type="submit">
+       </form>
+  `  )
+  `  }
+  ```
 
   ### React Query
   - Lib muito poderosa para requisições HTTP. Lida com cache para armazenar requisições e não precisar refaze-la
