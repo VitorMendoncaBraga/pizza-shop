@@ -99,7 +99,7 @@
 
   #### useQuery
    
-   - É uma hook da lib criado para poder lidar com requisições do tipo GET
+   - É um hook da lib criado para poder lidar com requisições do tipo GET
    - Recebe como parâmentro um queryKey para poder identificar aquela requisição
    - Também recebe como parâmetro o queryFn para ser a função da requisição
 
@@ -126,6 +126,28 @@
    }
 
   ```
+
+  #### useMutation
+
+  - É um outro hook do reactquery para poder lidar com requisições, porém requisições POST, PUT, PATCH ou DELETE
+   ```
+      const { mutateAsync: updateProfileFn } = useMutation({
+        mutationFn: updateRestaurantProfile,
+      });
+
+    async function handleUpdateProfile(data: RestaurantProfileSchema) {
+      try {
+        await updateProfileFn({
+          name: data.name,
+          description: data.description,
+        });
+        toast.success("Perfil atualizado com sucesso!");
+      } catch {
+        toast.error("Falha ao atualizar o perfil! Tente novamente");
+      }
+    }
+    
+   ```
 
 
 
